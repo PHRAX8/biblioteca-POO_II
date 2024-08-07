@@ -1,0 +1,37 @@
+{
+  "name": "biblioteca-poo_ii",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "node index.js",
+    "client": "npm start --prefix frontend",
+    "server": "nodemon index.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/PHRAX8/biblioteca-POO_II.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PHRAX8/biblioteca-POO_II/issues"
+  },
+  "homepage": "https://github.com/PHRAX8/biblioteca-POO_II#readme",
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.2.6",
+    "concurrently": "^8.2.2",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mongodb": "^6.8.0",
+    "mongoose": "^8.4.4",
+    "react": "^18.3.1",
+    "react-redux": "^9.1.2",
+    "redux": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
