@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Axios from 'axios';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import UserForm from './components/UserForm';
 import HomePage from './components/HomePage';
+import UserForm from './components/UserForm';
+import BookForm from './components/BookForm';
 import UserList from './components/UserList';
+import BookList from './components/BookList';
 
 function App() {
   const [data, setData] = useState("");
@@ -38,6 +40,12 @@ function App() {
               <li>
                 <Link to="/add-user">Add User</Link>
               </li>
+              <li>
+                <Link to="/books">Books</Link>
+              </li>
+              <li>
+                <Link to="/add-book">Add Book</Link>
+              </li>
             </ul>
           </nav>
 
@@ -45,6 +53,8 @@ function App() {
             <Route path="/" element={<HomePage data={data} />} />
             <Route path="/users" element={<UserList />} />
             <Route path="/add-user" element={<UserForm />} />
+            <Route path="/books" element={<BookList />} />
+            <Route path="/add-book" element={<BookForm />} />
           </Routes>
         </div>
       </Router>
