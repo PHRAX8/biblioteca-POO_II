@@ -7,7 +7,7 @@ const getUsers = async (req, res) => {
         const users = await User.find({})
         res.status(200).json(users)
     } catch (error) {
-        res.status(500).json({message: error.message})
+        res.status(500).json({ message: error.message })
     }
 };
 
@@ -18,7 +18,7 @@ const getUser = async (req, res) => {
         const user = await User.findById(id)
         res.status(200).json(user)
     } catch (error) {
-        res.status(500).json({message: error.message})
+        res.status(500).json({ message: error.message })
     }
 }
 
@@ -65,16 +65,16 @@ const deleteUser = async (req, res) => {
         const { id } = req.params
         const user = await User.findByIdAndDelete(id)
         if (!user)
-            return res.status(404).json({message: "User not Found"})
-        
-        return res.status(200).json({message: "User deleted successfully"})
+            return res.status(404).json({ message: "User not Found" })
+
+        return res.status(200).json({ message: "User deleted successfully" })
     } catch (error) {
-        res.status(500).json({message: error.message})
+        res.status(500).json({ message: error.message })
     }
 }
 
 //const login = async (req, res) => {
-    // Implementar a lógica de login
+// Implementar a lógica de login
 //};
 
 module.exports = {
@@ -83,5 +83,5 @@ module.exports = {
     postUser,
     putUser,
     deleteUser
-//    login,
+    //    login,
 };
