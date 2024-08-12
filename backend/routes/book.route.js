@@ -6,7 +6,7 @@ const {
     postBook,
     putBook,
     deleteBook
-} = require('../controllers/book.controller.js');
+} = require('../controllers/book.controller');
 
 // Rota para obter todos os livros
 router.get('/', getBooks);

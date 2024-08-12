@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBooks, deleteBook, updateBook } from '../redux/bookSlice'; // Adjust the import path as needed
+import { fetchBooks, deleteBook, updateBook } from '../redux/bookSlice'; 
 
 const BookList = () => {
   const books = useSelector((state) => state.books.books);
