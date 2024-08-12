@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const userRoute = require('./routes/user.route.js');
 const bookRoute = require('./routes/book.route.js');
 const memberRoute = require('./routes/member.route.js');
+const loanRoute = require('./routes/loan.route.js');
 const app = express();
 
 // middleware
@@ -15,6 +16,7 @@ app.use(express.urlencoded({extended: false}));
 app.use("/api/users", userRoute);
 app.use("/api/books", bookRoute);
 app.use("/api/members", memberRoute);
+app.use("/api/loans", loanRoute);
 
 // get index
 app.get('/getData', (req, res) => {
