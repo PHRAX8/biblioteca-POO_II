@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-//const User = require('./models/user.model.js');
 const userRoute = require('./routes/user.route.js');
 const bookRoute = require('./routes/book.route.js');
 const memberRoute = require('./routes/member.route.js');
@@ -23,7 +22,7 @@ app.get('/getData', (req, res) => {
 });
 
 // mongoose connection to mongodb
-mongoose.connect('mongodb+srv://admin:admin123@bibliotecabackend.brnwws2.mongodb.net/?retryWrites=true&w=majority&appName=BibliotecaBackend')
+mongoose.connect('mongodb+srv://admin:admin123@bibliotecabackend.brnwws2.mongodb.net/BibliotecaBackend?retryWrites=true&w=majority&appName=BibliotecaBackend')
 .then(() => {
     console.log('Connected to Database!')
     app.listen(5000, () => {
