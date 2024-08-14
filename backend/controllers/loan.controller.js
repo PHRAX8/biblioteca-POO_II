@@ -28,14 +28,14 @@ const getLoan = async (req, res) => {
 const postLoan = async (req, res) => {
     try {
         const { book_id, member_id, loan_date, return_date, returned } = req.body;
-        if (!book_id || !member_id || !returned) {
-            return res.status(400).json({ message: 'Todos os campos obrigatórios devem ser preenchidos' });
+        if (!book_id || !member_id || returned === undefined) {
+            return res.status(400).json({ message: 'Campos obrigatórios estão ausentes.' });
         }
         const newLoan = new Loan({ book_id, member_id, loan_date, return_date, returned });
         await newLoan.save();
         res.status(201).json(newLoan);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: `Erro ao criar empréstimo: ${error.message}` });
     }
 };
 

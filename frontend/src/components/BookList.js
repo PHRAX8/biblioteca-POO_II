@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBooks, deleteBook, updateBook } from '../redux/bookSlice'; 
+import { fetchBooks, deleteBook, updateBook } from '../redux/bookSlice';
 
 const BookList = () => {
   const books = useSelector((state) => state.books.books);
@@ -57,22 +57,22 @@ const BookList = () => {
             <li key={book._id}>
               {editingBook && editingBook._id === book._id ? (
                 <div>
-                  <input 
-                    type="text" 
-                    value={title} 
-                    onChange={(e) => setTitle(e.target.value)} 
+                  <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                     placeholder="Title"
                   />
-                  <input 
-                    type="text" 
-                    value={author} 
-                    onChange={(e) => setAuthor(e.target.value)} 
+                  <input
+                    type="text"
+                    value={author}
+                    onChange={(e) => setAuthor(e.target.value)}
                     placeholder="Author"
                   />
-                  <input 
-                    type="text" 
-                    value={isbn} 
-                    onChange={(e) => setIsbn(e.target.value)} 
+                  <input
+                    type="text"
+                    value={isbn}
+                    onChange={(e) => setIsbn(e.target.value)}
                     placeholder="ISBN"
                   />
                   <label>
@@ -96,7 +96,7 @@ const BookList = () => {
             </li>
           ))}
         </ul>
-      ): null}
+      ) : null}
     </div>
   );
 };

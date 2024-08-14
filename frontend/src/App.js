@@ -7,9 +7,12 @@ import HomePage from './components/HomePage';
 import UserForm from './components/UserForm';
 import BookForm from './components/BookForm';
 import MemberForm from './components/MemberForm';
+import LoanForm from './components/LoanForm';
 import UserList from './components/UserList';
 import BookList from './components/BookList';
 import MemberList from './components/MemberList';
+import LoanList from './components/LoanList';
+import ReturnedLoanList from './components/ReturnedLoanList';
 
 function App() {
   const [data, setData] = useState("");
@@ -54,6 +57,15 @@ function App() {
               <li>
                 <Link to="/add-member">Add Member</Link>
               </li>
+              <li>
+                <Link to="/loans">Loans</Link>
+              </li>
+              <li>
+                <Link to="/returnedloans">Returned Loans</Link>
+              </li>
+              <li>
+                <Link to="/add-loan">Add Loan</Link>
+              </li>
             </ul>
           </nav>
 
@@ -62,9 +74,12 @@ function App() {
             <Route path="/users" element={<UserList />} />
             <Route path="/add-user" element={<UserForm />} />
             <Route path="/books" element={<BookList />} />
-            <Route path="/add-book" element={<BookForm />} />            
+            <Route path="/add-book" element={<BookForm />} />
             <Route path="/members" element={<MemberList />} />
             <Route path="/add-member" element={<MemberForm />} />
+            <Route path="/loans" element={<LoanList />} />
+            <Route path="/returnedloans" element={<ReturnedLoanList />} />
+            <Route path="/add-loan" element={<LoanForm />} />
           </Routes>
         </div>
       </Router>
