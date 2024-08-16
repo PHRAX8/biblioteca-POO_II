@@ -28,9 +28,18 @@ const UserForm = () => {
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </label>
         <br />
+        {/* Hidden input field to maintain the original structure */}
+        <label style={{ display: 'none' }}>
+          Role:
+          <input type="text" value={role} readOnly />
+        </label>
+        {/* Dropdown for selecting the role */}
         <label>
           Role:
-          <input type="text" value={role} onChange={(e) => setRole(e.target.value)} />
+          <select value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="librarian">Librarian</option>
+            <option value="admin">Admin</option>
+          </select>
         </label>
         <br />
         <button type="submit">Add User</button>

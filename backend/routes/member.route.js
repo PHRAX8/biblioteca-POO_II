@@ -1,20 +1,22 @@
 const express = require('express');
-const router = express.Router();
 const { getMember, getMembers, postMember, putMember, deleteMember } = require('../controllers/member.controller');
+const authMiddleware = require('../auth/authMiddleware');
+
+const router = express.Router();
 
 // Rota para obter todos os membros
-router.get('/', getMembers);
+router.get('/', authMiddleware, getMembers);
 
 // Rota para obter um membro pelo ID
-router.get('/:id', getMember);
+router.get('/:id', authMiddleware, getMember);
 
 // Rota para criar um novo membro
-router.post('/', postMember);
+router.post('/', authMiddleware, postMember);
 
 // Rota para atualizar um membro pelo ID
-router.put('/:id', putMember);
+router.put('/:id', authMiddleware, putMember);
 
 // Rota para deletar um membro pelo ID
-router.delete('/:id', deleteMember);
+router.delete('/:id', authMiddleware, deleteMember);
 
 module.exports = router;

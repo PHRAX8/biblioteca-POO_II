@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 // Async actions
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async (_, thunkAPI) => {
   try {
-    const response = await axios.get('http://localhost:5000/api/users');
+    const response = await axiosInstance.get('http://localhost:5000/api/users');
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -13,7 +14,7 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async (_, thunkAP
 
 export const deleteUser = createAsyncThunk('users/deleteUser', async (id, thunkAPI) => {
   try {
-    await axios.delete(`http://localhost:5000/api/users/${id}`);
+    await axiosInstance.delete(`http://localhost:5000/api/users/${id}`);
     return id;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -31,9 +32,21 @@ export const addUser = createAsyncThunk('users/addUser', async (userData, thunkA
 
 export const updateUser = createAsyncThunk('users/updateUser', async ({ id, userData }, thunkAPI) => {
   try {
-    const response = await axios.put(`http://localhost:5000/api/users/${id}`, userData);
+    const response = await axiosInstance.put(`http://localhost:5000/api/users/${id}`, userData);
     return response.data;
   } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data || error.message);
+  }
+});
+
+export const loginUser = createAsyncThunk('users/loginUser', async (credentials, thunkAPI) => {
+  try {
+    const response = await axios.post('http://localhost:5000/api/users/login', credentials);
+    // Save the token to localStorage
+    localStorage.setItem('token', response.data.token);
+    return response.data.user;
+  } catch (error) {
+    console.error('Login failed:', error.response ? error.response.data : error.message);
     return thunkAPI.rejectWithValue(error.response?.data || error.message);
   }
 });
@@ -41,11 +54,17 @@ export const updateUser = createAsyncThunk('users/updateUser', async ({ id, user
 const userSlice = createSlice({
   name: 'user',
   initialState: {
+    currentUser: null,
     users: [],
     status: 'idle',
     error: null,
   },
-  reducers: {},
+  reducers: {
+    logoutUser: (state) => {
+      state.currentUser = null;
+      localStorage.removeItem('token'); // Remove the token on logout
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
@@ -89,8 +108,21 @@ const userSlice = createSlice({
       .addCase(updateUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.currentUser = action.payload; // Store the logged-in user
+        state.error = null;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
       });
   },
 });
 
+export const { logoutUser } = userSlice.actions;
 export default userSlice.reducer

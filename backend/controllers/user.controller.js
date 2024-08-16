@@ -1,5 +1,7 @@
-//const userRepository = require('../repositories/userRepository');
 const User = require('../models/user.model.js');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 // get all users
 const getUsers = async (req, res) => {
@@ -73,15 +75,39 @@ const deleteUser = async (req, res) => {
     }
 }
 
-//const login = async (req, res) => {
-// Implementar a lógica de login
-//};
+const login = async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        if (!username || !password) {
+            return res.status(400).json({ message: 'Nome de usuário e senha são obrigatórios' });
+        }
+
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(400).json({ message: 'Usuário não encontrado' });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Senha incorreta' });
+        }
+
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
+            expiresIn: '1h',
+        });
+
+        res.status(200).json({ token, user: { id: user._id, username: user.username, role: user.role } });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
 module.exports = {
     getUser,
     getUsers,
     postUser,
     putUser,
-    deleteUser
-    //    login,
+    deleteUser,
+    login
 };
