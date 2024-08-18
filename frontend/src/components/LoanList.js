@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBooks } from '../redux/bookSlice';
 import { fetchMembers } from '../redux/memberSlice';
@@ -6,10 +6,11 @@ import { fetchLoans, deleteLoan, updateLoan } from '../redux/loanSlice';
 
 const LoanList = () => {
   const loans = useSelector((state) => state.loans.loans);
-  const books = useSelector((state) => state.books.books);
-  const members = useSelector((state) => state.members.members);
   const status = useSelector((state) => state.loans.status);
   const error = useSelector((state) => state.loans.error);
+
+  const { currentUser } = useSelector((state) => state.users);
+  const isAdmin = currentUser?.role === 'admin';
 
   const dispatch = useDispatch();
 
@@ -60,7 +61,9 @@ const LoanList = () => {
                     onChange={() => handleReturnedChange(loan)}
                   />
                 </p>
-                <button onClick={() => handleDelete(loan._id)}>Delete</button>
+                {isAdmin && (
+                  <button onClick={() => handleDelete(loan._id)}>Delete</button>
+                )}
               </div>
             ))}
         </ul>

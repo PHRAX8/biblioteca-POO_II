@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../redux/userSlice';
 
 const UserForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+
+  const { currentUser } = useSelector((state) => state.users);
+  const isAdmin = currentUser?.role === 'admin';
 
   const dispatch = useDispatch();
 
@@ -38,7 +41,9 @@ const UserForm = () => {
           Role:
           <select value={role} onChange={(e) => setRole(e.target.value)}>
             <option value="librarian">Librarian</option>
-            <option value="admin">Admin</option>
+            {isAdmin && (
+              <option value="admin">Admin</option>
+            )}
           </select>
         </label>
         <br />

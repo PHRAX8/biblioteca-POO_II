@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, logoutUser } from '../redux/userSlice';
+import { loginUser } from '../redux/userSlice';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -13,38 +13,27 @@ const Login = () => {
     dispatch(loginUser({ username, password }));
   };
 
-  const handleLogout = () => {
-    dispatch(logoutUser());
-  };
-
   // Inspect error object
   const errorMessage = error?.message || error;
 
   return (
     <div>
       <h2>Login</h2>
-      {!currentUser ? (
-        <form onSubmit={handleSubmit}>
-          <input 
-            type="text" 
-            value={username} 
-            onChange={(e) => setUsername(e.target.value)} 
-            placeholder="Username" 
-          />
-          <input 
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            placeholder="Password" 
-          />
-          <button type="submit">Login</button>
-        </form>
-      ) : (
-        <div>
-          <p>Welcome, {currentUser.username}!</p>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      )}
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Username"
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+        />
+        <button type="submit">Login</button>
+      </form>
       {status === 'loading' && <p>Loading...</p>}
       {errorMessage && <p>{errorMessage}</p>} {/* Render error message safely */}
     </div>

@@ -1,15 +1,16 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBooks } from '../redux/bookSlice';
 import { fetchMembers } from '../redux/memberSlice';
-import { fetchLoans, deleteLoan, updateLoan } from '../redux/loanSlice';
+import { fetchLoans, deleteLoan } from '../redux/loanSlice';
 
 const ReturnedLoanList = () => {
   const loans = useSelector((state) => state.loans.loans);
-  const books = useSelector((state) => state.books.books);
-  const members = useSelector((state) => state.members.members);
   const status = useSelector((state) => state.loans.status);
   const error = useSelector((state) => state.loans.error);
+
+  const { currentUser } = useSelector((state) => state.users);
+  const isAdmin = currentUser?.role === 'admin';
 
   const dispatch = useDispatch();
 
@@ -22,19 +23,6 @@ const ReturnedLoanList = () => {
   const handleDelete = useCallback((id) => {
     dispatch(deleteLoan(id));
   }, [dispatch]);
-
-  const handleUpdate = useCallback((id, loanData) => {
-    dispatch(updateLoan({ id, loanData }));
-  }, [dispatch]);
-
-  const handleReturnedChange = (loan) => {
-    const updatedLoan = {
-      ...loan,
-      returned: !loan.returned,
-      return_date: !loan.returned ? new Date().toISOString().split('T')[0] : null, // Generate return date if checkbox is marked
-    };
-    handleUpdate(loan._id, updatedLoan);
-  };
 
   return (
     <div>
@@ -53,7 +41,9 @@ const ReturnedLoanList = () => {
                 <p>Member: {loan.member_id ? loan.member_id.name : 'Member not available'}</p>
                 <p>Loan Date: {loan.loan_date}</p>
                 <p>Return Date: {loan.return_date}</p>
-                <button onClick={() => handleDelete(loan._id)}>Delete</button>
+                {isAdmin && (
+                  <button onClick={() => handleDelete(loan._id)}>Delete</button>
+                )}
               </div>
             ))}
         </ul>
