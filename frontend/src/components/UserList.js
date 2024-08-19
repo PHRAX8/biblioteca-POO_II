@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers, deleteUser, updateUser } from '../redux/userSlice';
+import UserItem from './UserItem';
 
 const UserList = () => {
   const users = useSelector((state) => state.users.users);
@@ -9,17 +10,14 @@ const UserList = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log('Dispatching fetchUsers');
     dispatch(fetchUsers());
   }, [dispatch]);
 
   const handleDelete = useCallback((id) => {
-    console.log(`Deleting user with id: ${id}`);
     dispatch(deleteUser(id));
   }, [dispatch]);
 
   const handleUpdate = useCallback((id, userData) => {
-    console.log(`Updating user with id: ${id}`);
     dispatch(updateUser({ id, userData }));
   }, [dispatch]);
 
@@ -34,46 +32,44 @@ const UserList = () => {
   };
 
   const saveEdit = () => {
-    handleUpdate(editingUser._id, { username, role });
+    if (editingUser) {
+      handleUpdate(editingUser._id, { username, role });
+      setEditingUser(null);
+      setUsername('');
+      setRole('');
+    }
+  };
+
+  const cancelEdit = () => {
     setEditingUser(null);
     setUsername('');
     setRole('');
   };
 
   return (
-    <div>
-      <h2>User List</h2>
-      {status === 'loading' ? <p>Loading...</p> : null}
-      {status === 'failed' ? <p>Error: {error}</p> : null}
-      {status === 'succeeded' ? (
-        <ul>
+    <div className="container mt-4" style={{ backgroundColor: '#f7f9fc', padding: '20px', borderRadius: '10px' }}>
+      <h2 className="text-center" style={{ color: '#6c757d' }}>User List</h2>
+      {status === 'loading' ? <p className="text-center">Loading...</p> : null}
+      {status === 'failed' ? (
+        <p className="text-center" style={{ color: '#dc3545' }}>Error: {typeof error === 'string' ? error : error.message}</p>
+      ) : null}
+      {status === 'succeeded' && (
+        <div className="row">
           {users && users.map((user) => (
-            <li key={user._id}>
-              {editingUser && editingUser._id === user._id ? (
-                <div>
-                  <input 
-                    type="text" 
-                    value={username} 
-                    onChange={(e) => setUsername(e.target.value)} 
-                  />
-                  <select value={role} onChange={(e) => setRole(e.target.value)}>
-                    <option value="admin">Admin</option>
-                    <option value="librarian">Librarian</option>
-                  </select>
-                  <button onClick={saveEdit}>Save</button>
-                  <button onClick={() => setEditingUser(null)}>Cancel</button>
-                </div>
-              ) : (
-                <div>
-                  {user.username} - {user.role}
-                  <button onClick={() => startEdit(user)}>Edit</button>
-                  <button onClick={() => handleDelete(user._id)}>Delete</button>
-                </div>
-              )}
-            </li>
+            <UserItem
+              key={user._id}
+              user={user}
+              isEditing={editingUser && editingUser._id === user._id}
+              startEdit={() => startEdit(user)}
+              saveEdit={saveEdit}
+              cancelEdit={cancelEdit}
+              handleDelete={() => handleDelete(user._id)}
+              setUsername={setUsername}
+              setRole={setRole}
+            />
           ))}
-        </ul>
-      ): null}
+        </div>
+      )}
     </div>
   );
 };

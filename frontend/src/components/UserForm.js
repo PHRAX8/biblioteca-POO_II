@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../redux/userSlice';
+import FormInput from './FormInput';
+import FormSelect from './FormSelect';
 
 const UserForm = () => {
   const [username, setUsername] = useState("");
@@ -17,37 +19,42 @@ const UserForm = () => {
     dispatch(addUser({ username, password, role }));
   };
 
+  const roleOptions = [
+    { id: 'librarian', label: 'Librarian' },
+    ...(isAdmin ? [{ id: 'admin', label: 'Admin' }] : []),
+  ];
+
   return (
-    <div>
-      <h1>Add User</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </label>
-        <br />
-        {/* Hidden input field to maintain the original structure */}
-        <label style={{ display: 'none' }}>
-          Role:
-          <input type="text" value={role} readOnly />
-        </label>
-        {/* Dropdown for selecting the role */}
-        <label>
-          Role:
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
-            <option value="librarian">Librarian</option>
-            {isAdmin && (
-              <option value="admin">Admin</option>
-            )}
-          </select>
-        </label>
-        <br />
-        <button type="submit">Add User</button>
+    <div className="container mt-4" style={{ backgroundColor: '#f7f9fc', padding: '20px', borderRadius: '10px' }}>
+      <h1 className="text-center" style={{ color: '#6c757d' }}>Add User</h1>
+      <form onSubmit={handleSubmit} className="w-50 mx-auto">
+        <FormInput
+          label="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <FormInput
+          label="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+          required
+        />
+        <FormSelect
+          label="Role"
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          options={roleOptions}
+          required
+        />
+        <button 
+          type="submit" 
+          className="btn btn-primary w-100 mt-3" 
+          style={{ backgroundColor: '#6c757d', borderColor: '#6c757d' }}
+        >
+          Add User
+        </button>
       </form>
     </div>
   );

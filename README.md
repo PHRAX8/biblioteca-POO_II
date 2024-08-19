@@ -3,7 +3,7 @@
 ## Projeto de uma Biblioteca 
 
 - **Backend:** Node.js, Express & MongoDB
-- **Frontend:** React & Redux 
+- **Frontend:** React, Redux & Bootstrap
 
 ### Projeto: Sistema de Gerenciamento de Biblioteca
 

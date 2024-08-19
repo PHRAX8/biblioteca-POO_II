@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import axiosInstance from './axiosInstance';
 
 export const fetchBooks = createAsyncThunk('books/fetchBooks', async (_, thunkAPI) => {
