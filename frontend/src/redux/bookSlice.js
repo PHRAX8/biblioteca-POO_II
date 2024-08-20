@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from './axiosInstance';
-const backendUrl = process.env.BACKENDURI;
+const backendUrl = process.env.BACKENDURI+"";
 
 export const fetchBooks = createAsyncThunk('books/fetchBooks', async (_, thunkAPI) => {
     try {

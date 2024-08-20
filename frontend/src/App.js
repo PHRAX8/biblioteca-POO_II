@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './redux/store';
 import AppRoutes from './routes';
-const backendUrl = process.env.BACKENDURI;
+const backendUrl = process.env.REACT_APP_BACK_END_URI;
 
 function App() {
   const [data, setData] = useState("");
