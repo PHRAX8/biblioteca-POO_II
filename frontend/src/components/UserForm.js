@@ -11,12 +11,19 @@ const UserForm = () => {
 
   const { currentUser } = useSelector((state) => state.users);
   const isAdmin = currentUser?.role === 'admin';
-
+  
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addUser({ username, password, role }));
+    resetForm(); // Reset the form fields after dispatching the action
+  };
+
+  const resetForm = () => {
+    setUsername('');
+    setPassword('');
+    setRole('');
   };
 
   const roleOptions = [

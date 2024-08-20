@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../redux/userSlice';
 import LoginForm from './LoginForm';
@@ -13,6 +13,14 @@ const Login = () => {
     e.preventDefault();
     dispatch(loginUser({ username, password }));
   };
+
+  // Reset form fields on login success or error
+  useEffect(() => {
+    if (status === 'succeeded' || status === 'failed') {
+      setUsername('');
+      setPassword('');
+    }
+  }, [status, error]);
 
   const errorMessage = error?.message || error;
 
