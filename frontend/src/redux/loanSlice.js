@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from './axiosInstance';
-const backendUrl = process.env.BACKENDURI;
+const backendUrl = process.env.REACT_APP_BACK_END_URI+"";
 
 // Thunks para as operações com empréstimos
 export const fetchLoans = createAsyncThunk('loans/fetchLoans', async (_, thunkAPI) => {
