@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const connectToDatabase = require('./database'); 
-require('dotenv').config(); 
+const connectToDatabase = require('./database');
+require('dotenv').config();
 
 const userRoute = require('../routes/user.route.js');
 const bookRoute = require('../routes/book.route.js');
@@ -11,7 +11,9 @@ const loanRoute = require('../routes/loan.route.js');
 const app = express();
 
 // middleware
-app.use(cors());
+app.use(cors({
+    origin: '*', // Allows requests from any origin
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -27,7 +29,7 @@ app.get('/getData', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.status(200).json({"message":"Hello From Node API"});
+    res.status(200).json({ "message": "Hello From Node API" });
 });
 
 // Conectar ao banco de dados
