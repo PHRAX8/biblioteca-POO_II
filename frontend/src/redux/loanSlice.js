@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from './axiosInstance';
-const apiUrl = process.env.GETAPIURI;
+const backendUrl = process.env.BACKENDURI;
 
 // Thunks para as operações com empréstimos
 export const fetchLoans = createAsyncThunk('loans/fetchLoans', async (_, thunkAPI) => {
     try {
-        const response = await axiosInstance.get(apiUrl+'/loans');
+        const response = await axiosInstance.get(backendUrl+'/api/loans');
         return response.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -14,7 +14,7 @@ export const fetchLoans = createAsyncThunk('loans/fetchLoans', async (_, thunkAP
 
 export const deleteLoan = createAsyncThunk('loans/deleteLoan', async (id, thunkAPI) => {
     try {
-        await axiosInstance.delete(apiUrl+`/loans/${id}`);
+        await axiosInstance.delete(backendUrl+`/api/loans/${id}`);
         return id;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -23,7 +23,7 @@ export const deleteLoan = createAsyncThunk('loans/deleteLoan', async (id, thunkA
 
 export const addLoan = createAsyncThunk('loans/addLoan', async (loanData, thunkAPI) => {
     try {
-        const response = await axiosInstance.post(apiUrl+'/loans', loanData);
+        const response = await axiosInstance.post(backendUrl+'/api/loans', loanData);
         return response.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -32,7 +32,7 @@ export const addLoan = createAsyncThunk('loans/addLoan', async (loanData, thunkA
 
 export const updateLoan = createAsyncThunk('loans/updateLoan', async ({ id, loanData }, thunkAPI) => {
     try {
-        const response = await axiosInstance.put(apiUrl+`/loans/${id}`, loanData);
+        const response = await axiosInstance.put(backendUrl+`/api/loans/${id}`, loanData);
         return response.data;
     } catch (error) {
         return thunkAPI.rejectWithValue(error.response?.data || error.message);

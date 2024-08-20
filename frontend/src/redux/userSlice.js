@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import axiosInstance from './axiosInstance';
-const apiUrl = process.env.GETAPIURI;
+const backendUrl = process.env.BACKENDURI;
 
 // Async actions
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async (_, thunkAPI) => {
   try {
-    const response = await axiosInstance.get(apiUrl+'/users');
+    const response = await axiosInstance.get(backendUrl+'/api/users');
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -15,7 +15,7 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async (_, thunkAP
 
 export const deleteUser = createAsyncThunk('users/deleteUser', async (id, thunkAPI) => {
   try {
-    await axiosInstance.delete(apiUrl+`/users/${id}`);
+    await axiosInstance.delete(backendUrl+`/api/users/${id}`);
     return id;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -24,7 +24,7 @@ export const deleteUser = createAsyncThunk('users/deleteUser', async (id, thunkA
 
 export const addUser = createAsyncThunk('users/addUser', async (userData, thunkAPI) => {
   try {
-    const response = await axios.post(apiUrl+'/users', userData);
+    const response = await axios.post(backendUrl+'/api/users', userData);
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -33,7 +33,7 @@ export const addUser = createAsyncThunk('users/addUser', async (userData, thunkA
 
 export const updateUser = createAsyncThunk('users/updateUser', async ({ id, userData }, thunkAPI) => {
   try {
-    const response = await axiosInstance.put(apiUrl+`/users/${id}`, userData);
+    const response = await axiosInstance.put(backendUrl+`/api/users/${id}`, userData);
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -42,7 +42,7 @@ export const updateUser = createAsyncThunk('users/updateUser', async ({ id, user
 
 export const loginUser = createAsyncThunk('users/loginUser', async (credentials, thunkAPI) => {
   try {
-    const response = await axios.post(apiUrl+'/users/login', credentials);
+    const response = await axios.post(backendUrl+'/api/users/login', credentials);
     // Save the token to localStorage
     localStorage.setItem('token', response.data.token);
     return response.data.user;

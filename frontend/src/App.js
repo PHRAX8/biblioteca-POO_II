@@ -4,14 +4,14 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './redux/store';
 import AppRoutes from './routes';
-const apiUrl = process.env.GETDATAURI;
+const backendUrl = process.env.BACKENDURI;
 
 function App() {
   const [data, setData] = useState("");
 
   const getData = async () => {
     try {
-      const response = await Axios.get(apiUrl);
+      const response = await Axios.get(backendUrl+"/api");
       setData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);

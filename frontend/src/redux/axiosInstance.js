@@ -1,8 +1,8 @@
 import Axios from 'axios';
-const apiUrl = process.env.GETAPIURI;
+const backendUrl = process.env.BACKENDURI;
 
 const axiosInstance = Axios.create({
-  baseURL: apiUrl,
+  baseURL: backendUrl+"/api",
 });
 
 // Attach token to every request

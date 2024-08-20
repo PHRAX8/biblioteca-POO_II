@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from './axiosInstance';
-const apiUrl = process.env.GETAPIURI;
+const backendUrl = process.env.BACKENDURI;
 
 // Async actions
 export const fetchMembers = createAsyncThunk('members/fetchMembers', async (_, thunkAPI) => {
   try {
-    const response = await axiosInstance.get(apiUrl+'/members');
+    const response = await axiosInstance.get(backendUrl+'/api/members');
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -14,7 +14,7 @@ export const fetchMembers = createAsyncThunk('members/fetchMembers', async (_, t
 
 export const deleteMember = createAsyncThunk('members/deleteMember', async (id, thunkAPI) => {
   try {
-    await axiosInstance.delete(apiUrl+`/members/${id}`);
+    await axiosInstance.delete(backendUrl+`/api/members/${id}`);
     return id;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -23,7 +23,7 @@ export const deleteMember = createAsyncThunk('members/deleteMember', async (id, 
 
 export const addMember = createAsyncThunk('members/addMember', async (memberData, thunkAPI) => {
   try {
-    const response = await axiosInstance.post(apiUrl+'/members', memberData);
+    const response = await axiosInstance.post(backendUrl+'/api/members', memberData);
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -32,7 +32,7 @@ export const addMember = createAsyncThunk('members/addMember', async (memberData
 
 export const updateMember = createAsyncThunk('members/updateMember', async ({ id, memberData }, thunkAPI) => {
   try {
-    const response = await axiosInstance.put(apiUrl+`/members/${id}`, memberData);
+    const response = await axiosInstance.put(backendUrl+`/api/members/${id}`, memberData);
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data || error.message);
