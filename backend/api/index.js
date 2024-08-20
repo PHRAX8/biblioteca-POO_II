@@ -26,11 +26,15 @@ app.get('/getData', (req, res) => {
     res.send("Hello From Node API");
 });
 
+app.get('/', (req, res) => {
+    res.status(200).json({"message":"Hello From Node API"});
+});
+
 // Conectar ao banco de dados
 connectToDatabase();
 
 // Start server
-const PORT = process.env.PORT || 5000;
+/*const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is Running on Port ${PORT}`);
-});
+});*/

@@ -1,7 +1,8 @@
 import Axios from 'axios';
+const apiUrl = process.env.GETAPIURI;
 
 const axiosInstance = Axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: apiUrl,
 });
 
 // Attach token to every request

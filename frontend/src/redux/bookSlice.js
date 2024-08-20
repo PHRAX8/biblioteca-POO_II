@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from './axiosInstance';
+const apiUrl = process.env.GETAPIURI;
 
 export const fetchBooks = createAsyncThunk('books/fetchBooks', async (_, thunkAPI) => {
     try {
-      const response = await axiosInstance.get('http://localhost:5000/api/books');
+      const response = await axiosInstance.get(apiUrl+'/books');
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -12,7 +13,7 @@ export const fetchBooks = createAsyncThunk('books/fetchBooks', async (_, thunkAP
   
   export const deleteBook = createAsyncThunk('books/deleteBook', async (id, thunkAPI) => {
     try {
-      await axiosInstance.delete(`http://localhost:5000/api/books/${id}`);
+      await axiosInstance.delete(apiUrl+`/books/${id}`);
       return id;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -21,7 +22,7 @@ export const fetchBooks = createAsyncThunk('books/fetchBooks', async (_, thunkAP
   
   export const addBook = createAsyncThunk('books/addBook', async (bookData, thunkAPI) => {
     try {
-      const response = await axiosInstance.post('http://localhost:5000/api/books', bookData);
+      const response = await axiosInstance.post(apiUrl+'/books', bookData);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -30,7 +31,7 @@ export const fetchBooks = createAsyncThunk('books/fetchBooks', async (_, thunkAP
   
   export const updateBook = createAsyncThunk('books/updateBook', async ({ id, bookData }, thunkAPI) => {
     try {
-      const response = await axiosInstance.put(`http://localhost:5000/api/books/${id}`, bookData);
+      const response = await axiosInstance.put(apiUrl+`/books/${id}`, bookData);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
