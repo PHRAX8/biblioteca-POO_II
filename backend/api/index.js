@@ -3,10 +3,10 @@ const cors = require('cors');
 const connectToDatabase = require('./database'); 
 require('dotenv').config(); 
 
-const userRoute = require('./routes/user.route.js');
-const bookRoute = require('./routes/book.route.js');
-const memberRoute = require('./routes/member.route.js');
-const loanRoute = require('./routes/loan.route.js');
+const userRoute = require('../routes/user.route.js');
+const bookRoute = require('../routes/book.route.js');
+const memberRoute = require('../routes/member.route.js');
+const loanRoute = require('../routes/loan.route.js');
 
 const app = express();
 
